@@ -343,7 +343,60 @@ do
 
         case "4":
             // Ensure animal nicknames and personality descriptions are complete
-            Console.WriteLine("Challenge Project - please check back soon to see progress.");
+            for (int i = 0; i < maxPets; i++)
+            {
+                // Skip over any animal in the ourAnimals array when the value of pet ID is set to the default value
+                if (ourAnimals[i,0] == "ID #: ")
+                    continue;
+
+                // Skip those that don't have incomplete data
+                bool validNickname = ourAnimals[i, 3] != "Nickname: " && ourAnimals[i, 3] != "Nickname: tbd";
+                bool validPersonality = ourAnimals[i, 5] != "Personality: tbd" && ourAnimals[i, 5] != "Personality: ";
+                if (validNickname && validPersonality)
+                    continue;
+
+                Console.WriteLine();
+                // Display the pet ID value and prompt the user for an updated data value if ourAnimals array data is missing or incomplete
+                // Ensure that a valid string is assigned to animalNickname for all animals in the ourAnimals array that have assigned data.
+                while (!validNickname)
+                {
+                    Console.WriteLine($"Enter a nickname for {ourAnimals[i, 0]}");
+                    readResult = Console.ReadLine();
+                    // Values cannot be null.
+                    if (readResult == null)
+                        continue;
+
+                    animalNickname = readResult.ToLower();
+                    // Values cannot have zero characters.
+                    if (animalNickname.Length == 0)
+                        continue;
+
+                    validNickname = true;
+                    ourAnimals[i, 3] = $"Nickname: {animalNickname}";
+                }
+
+                // Ensure that a valid string is assigned to animalPersonalityDescription for all animals in the ourAnimals array that have assigned data.
+                while (!validPersonality)
+                {
+                    Console.WriteLine($"Enter a personality description for {ourAnimals[i, 0]} (likes or dislikes, tricks, energy level)");
+                    readResult = Console.ReadLine();
+                    // Values cannot be null.
+                    if (readResult == null)
+                        continue;
+
+                    animalPersonalityDescription = readResult.ToLower();
+                    // Values cannot have zero characters.
+                    if (animalPersonalityDescription.Length == 0)
+                        continue;
+
+                    validPersonality = true;
+                    ourAnimals[i, 5] = $"Personality: {animalPersonalityDescription}";
+                }
+            }
+
+            // Inform the application user when all data requirements are met, pausing the application to ensure the message can be seen and responded to.
+            Console.WriteLine();
+            Console.WriteLine("Nickname and personality description fields are complete for all of our friends.");
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
             break;
