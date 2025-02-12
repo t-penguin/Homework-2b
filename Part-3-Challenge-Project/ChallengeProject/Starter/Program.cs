@@ -60,7 +60,6 @@ for (int i = 0; i < maxPets; i++)
             animalPhysicalDescription = "";
             animalPersonalityDescription = "";
             animalNickname = "";
-
             break;
 
         default:
@@ -71,7 +70,6 @@ for (int i = 0; i < maxPets; i++)
             animalPersonalityDescription = "";
             animalNickname = "";
             break;
-
     }
 
     ourAnimals[i, 0] = "ID #: " + animalID;
@@ -92,8 +90,8 @@ do
     Console.WriteLine(" 2. Add a new animal friend to the ourAnimals array");
     Console.WriteLine(" 3. Ensure animal ages and physical descriptions are complete");
     Console.WriteLine(" 4. Ensure animal nicknames and personality descriptions are complete");
-    Console.WriteLine(" 5. Edit an animal’s age");
-    Console.WriteLine(" 6. Edit an animal’s personality description");
+    Console.WriteLine(" 5. Edit an animal's age");
+    Console.WriteLine(" 6. Edit an animal's personality description");
     Console.WriteLine(" 7. Display all cats with a specified characteristic");
     Console.WriteLine(" 8. Display all dogs with a specified characteristic");
     Console.WriteLine();
@@ -287,7 +285,58 @@ do
 
         case "3":
             // Ensure animal ages and physical descriptions are complete
-            Console.WriteLine("Challenge Project - please check back soon to see progress.");
+            for (int i = 0; i < maxPets; i++)
+            {
+                // Skip over any animal in the ourAnimals array when the value of pet ID is set to the default value
+                if (ourAnimals[i,0] == "ID #: ")
+                    continue;
+
+                // Skip those that don't have incomplete data
+                bool validAge = ourAnimals[i, 2] != "Age: ?";
+                bool validDescription = ourAnimals[i, 4] != "Physical description: tbd" && ourAnimals[i, 4] != "Physical description: ";
+                if (validAge && validDescription)
+                    continue;
+
+                Console.WriteLine();
+                // Display the pet ID value and prompt the user for an updated data value if ourAnimals array data is missing or incomplete
+                // Ensure that a valid numeric value is assigned to animalAge for all animals in the ourAnimals array that have assigned data.
+                while (!validAge)
+                {
+                    Console.WriteLine($"Enter an age for {ourAnimals[i, 0]}");
+                    readResult = Console.ReadLine();
+                    if (readResult == null)
+                        continue;
+                    
+                    animalAge = readResult;
+                    validAge = int.TryParse(animalAge, out petAge);
+                    if (!validAge)
+                        continue;
+                    
+                    ourAnimals[i, 2] = $"Age: {animalAge}";
+                }
+
+                // Ensure that a valid string is assigned to animalPhysicalDescription for all animals in the ourAnimals array that have assigned data.
+                while (!validDescription)
+                {
+                    Console.WriteLine($"Enter a physical description for {ourAnimals[i, 0]} (size, color, breed, gender, weight, housebroken)");
+                    readResult = Console.ReadLine();
+                    // Values cannot be null.
+                    if (readResult == null)
+                        continue;
+
+                    animalPhysicalDescription = readResult.ToLower();
+                    // Values cannot have zero characters.
+                    if (animalPhysicalDescription.Length == 0)
+                        continue;
+
+                    validDescription = true;
+                    ourAnimals[i, 4] = $"Physical description: {animalPhysicalDescription}";
+                }
+            }
+
+            // Inform the application user when all data requirements are met, pausing the application to ensure the message can be seen and responded to.
+            Console.WriteLine();
+            Console.WriteLine("Age and physical description fields are complete for all of our friends.");
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
             break;
