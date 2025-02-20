@@ -37,7 +37,17 @@ while (!shouldExit)
     }
 
     Move();
+
+    // Change player appearance and show new food on consumption
+    if (FoodConsumed())
+    {
+        ChangePlayer();
+        ShowFood();
+    }
 }
+
+// Returns true if the player has consumed the food
+bool FoodConsumed() => playerX == foodX && playerY == foodY;
 
 // Returns true if the Terminal was resized 
 bool TerminalResized() 
