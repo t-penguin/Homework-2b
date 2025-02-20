@@ -17,7 +17,7 @@ string[,] group = AssignGroup();
 Console.WriteLine("School A");
 
 // Print the animal groups
-//PrintGroup(group);
+PrintGroup(group);
 
 void RandomizeAnimals()
 {
@@ -38,7 +38,7 @@ string [,] AssignGroup(int groups = 6)
     int animalsPerGroup = pettingZoo.Length / groups;
     string[,] result = new string[groups, animalsPerGroup];
     int start = 0;
-    
+
     for (int i = 0; i < groups; i++)
     {
         for (int j = 0; j < animalsPerGroup; j++)
@@ -50,6 +50,17 @@ string [,] AssignGroup(int groups = 6)
     return result;
 }
 
-/* TEST DISPLAY */
-foreach (string animal in pettingZoo)
-    Console.WriteLine(animal);
+void PrintGroup(string[,] group)
+{
+    int numGroups = group.GetLength(0);
+    int numAnimals = group.GetLength(1);
+
+    for (int i = 0; i < numGroups; i++)
+    {
+        Console.Write($"Group {i + 1}: ");
+        for(int j = 0; j < numAnimals; j++)
+            Console.Write($"{group[i, j]}  ");
+
+        Console.WriteLine();
+    }
+}
