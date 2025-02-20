@@ -36,7 +36,15 @@ while (!shouldExit)
         break;
     }
 
-    Move();
+    // Checks if the player should be temporarily frozen
+    if (Frozen())
+        FreezePlayer();
+
+    // Checks if the player should be moving horizontally by 1 or 3 units
+    if (Speedy())
+        Move();
+    else
+        Move(speedy: false);
 
     // Change player appearance and show new food on consumption
     if (FoodConsumed())
@@ -48,6 +56,12 @@ while (!shouldExit)
 
 // Returns true if the player has consumed the food
 bool FoodConsumed() => playerX == foodX && playerY == foodY;
+
+// Returns true if the player state is "(X_X)"
+bool Frozen() => player == states[2];
+
+// Returns true if the player state is "(^-^)"
+bool Speedy() => player == states[1];
 
 // Returns true if the Terminal was resized 
 bool TerminalResized() 
@@ -86,7 +100,7 @@ void FreezePlayer()
 }
 
 // Reads directional input from the Console and moves the player
-void Move(bool endOnNondirectionalInput = false) 
+void Move(bool speedy = true, bool endOnNondirectionalInput = true) 
 {
     int lastX = playerX;
     int lastY = playerY;
@@ -100,10 +114,10 @@ void Move(bool endOnNondirectionalInput = false)
             playerY++; 
             break;
 		case ConsoleKey.LeftArrow:  
-            playerX--; 
+            playerX -= speedy ? 3 : 1; 
             break;
 		case ConsoleKey.RightArrow: 
-            playerX++; 
+            playerX += speedy ? 3 : 1; 
             break;
 		case ConsoleKey.Escape:     
             shouldExit = true; 
