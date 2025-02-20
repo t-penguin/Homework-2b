@@ -8,7 +8,7 @@ string[] pettingZoo =
 };
 
 // Randomize the pettings zoo array
-//RandomizeAnimals();
+RandomizeAnimals();
 
 // Assign a randomized animal set to a subset group
 //string[,] group = AssignGroup();
@@ -18,3 +18,21 @@ Console.WriteLine("School A");
 
 // Print the animal groups
 //PrintGroup(group);
+
+void RandomizeAnimals()
+{
+    Random random = new Random();
+
+    for (int i = 0; i < pettingZoo.Length; i++)
+    {
+        int r = random.Next(i, pettingZoo.Length);
+
+        string temp = pettingZoo[i];
+        pettingZoo[i] = pettingZoo[r];
+        pettingZoo[r] = temp;
+    }
+}
+
+/* TEST DISPLAY */
+foreach (string animal in pettingZoo)
+    Console.WriteLine(animal);
