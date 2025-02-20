@@ -11,7 +11,7 @@ string[] pettingZoo =
 RandomizeAnimals();
 
 // Assign a randomized animal set to a subset group
-//string[,] group = AssignGroup();
+string[,] group = AssignGroup();
 
 // Print the school name
 Console.WriteLine("School A");
@@ -31,6 +31,23 @@ void RandomizeAnimals()
         pettingZoo[i] = pettingZoo[r];
         pettingZoo[r] = temp;
     }
+}
+
+string [,] AssignGroup(int groups = 6)
+{
+    int animalsPerGroup = pettingZoo.Length / groups;
+    string[,] result = new string[groups, animalsPerGroup];
+    int start = 0;
+    
+    for (int i = 0; i < groups; i++)
+    {
+        for (int j = 0; j < animalsPerGroup; j++)
+        {
+            result[i, j] = pettingZoo[start++];
+        }
+    }
+
+    return result;
 }
 
 /* TEST DISPLAY */
