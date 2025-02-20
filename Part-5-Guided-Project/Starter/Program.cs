@@ -7,18 +7,11 @@ string[] pettingZoo =
     "ostriches", "pigs", "ponies", "rabbits", "sheep", "tortoises",
 };
 
+PlanSchoolVisit("School A");
+PlanSchoolVisit("School B", 3);
+PlanSchoolVisit("School C", 2);
+
 // Randomize the pettings zoo array
-RandomizeAnimals();
-
-// Assign a randomized animal set to a subset group
-string[,] group = AssignGroup();
-
-// Print the school name
-Console.WriteLine("School A");
-
-// Print the animal groups
-PrintGroup(group);
-
 void RandomizeAnimals()
 {
     Random random = new Random();
@@ -33,6 +26,7 @@ void RandomizeAnimals()
     }
 }
 
+// Assign an already randomized animal set to a subset group
 string [,] AssignGroup(int groups = 6)
 {
     int animalsPerGroup = pettingZoo.Length / groups;
@@ -50,6 +44,7 @@ string [,] AssignGroup(int groups = 6)
     return result;
 }
 
+// Print the animal groups
 void PrintGroup(string[,] group)
 {
     int numGroups = group.GetLength(0);
@@ -63,4 +58,14 @@ void PrintGroup(string[,] group)
 
         Console.WriteLine();
     }
+}
+
+// Plan a school visit for any school with a variable number of groups (default 6)
+void PlanSchoolVisit(string schoolName, int groups = 6)
+{
+    RandomizeAnimals();
+    string[,] group = AssignGroup(groups);
+    Console.WriteLine(schoolName);
+    PrintGroup(group);
+    Console.WriteLine();
 }
